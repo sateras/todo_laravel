@@ -5,40 +5,40 @@
 @endsection
 
 @section('content')
-    <header class="flex">
-        <a href="{{ route("logout") }}">
-            <button class=" bg-blue-400 rounded-lg p-2 justify-end">Logout</button>
-        </a>
-    </header>
-
-    <div  class="bg-white p-20 rounded-lg">
+    <div class="bg-gray m-5 p-5 rounded-lg bg-light">
         Todos list:
         <a href="{{ route("task.new") }}">
-            <button class=" bg-green-500 rounded-lg p-2">New</button>
+            <button class="btn btn-success">New</button>
         </a>
-        
-        <table class="border-separate border-spacing-4">
-            <thead>
+        <br />
+
+        @if ( count($tasks) > 0)
+            <table class="border-separate border-spacing-4">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Дата создания</th>
+                        <th>Название</th>
+                        <th>(Action)</th>
+                    </tr>
+                </thead>
+                @foreach ($tasks as $task)
                 <tr>
-                    <th>Id</th>
-                    <th>Date</th>
-                    <th>Todoname</th>
-                    <th>Action</th>
+                    <td>{{ $task ->  id }}</td>
+                    <td>{{ $task ->  id }}</td>
+                    <td>{{ $task -> name }}</td>
+                    <td>
+                        <form action="{{ route('task.delete_process', $task-> id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class=" bg-red-500 rounded-lg p-2">Delete</button>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            @foreach ($tasks as $task)
-            <tr>
-                <td>{{ $task ->  id }}</td>
-                <td>15.15.2023</td>
-                <td>{{ $task -> name }}</td>
-                <td>
-                    <form action="{{ route('task.delete_process', $task-> id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class=" bg-red-500 rounded-lg p-2">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-          </table>
+                @endforeach
+            </table>
+        @endif
+        @if ( count($tasks) == 0)
+            To-Do список пусой, <a href="{{ route("task.new") }}">создайте</a> новую задачу
+        @endif
     </div>
 @endsection

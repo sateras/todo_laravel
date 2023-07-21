@@ -16,6 +16,7 @@
 </head>
 
 <body style="height: 100%;">
+    @include('partials.header')
     @yield('content')
 </body>
 

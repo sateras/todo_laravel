@@ -5,25 +5,24 @@
 @endsection
 
 @section('content')
-    <header class="flex">
-        <a href="{{ route("logout") }}">
-            <button class=" bg-blue-400 rounded-lg p-2 justify-end">Logout</button>
+    <div class="bg-gray m-5 p-5 rounded-lg bg-light">
+        Todos list:
+        <a href="{{ route("task.new") }}">
+            <button class="btn btn-success">New</button>
         </a>
-        </a>
-    </header>
+        <br />
 
-    <div  class="bg-white p-20 rounded-lg">
         Create new
         @error('name')
-        <div class=" text-red-500">
-            Заполни поле 
-        </div> 
+            <div>
+                Название
+            </div> 
         @enderror
         <form method="POST" action="{{ route("task.new_process") }}">
             @csrf
 
-            <input name="name" placeholder="Name" class="border-gray-800 rounded-md bg-green-200 p-2 @error('name') border-red-500 @enderror" type="text">
-            <button class=" bg-green-500 p-2 rounded-md" type="submit">
+            <input name="name" placeholder="Name" class="border border-gray-800 p-2 mt-3 @error('name') border-red-500 @enderror" type="text">
+            <button class="btn btn-success" type="submit">
                 Add
             </button>
         </form>
