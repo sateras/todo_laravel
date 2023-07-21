@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateTaskRequest;
-use App\Models\Task;
-use App\Services\TaskService;
+use App\Http\Requests\CreateTagRequest;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TagController extends Controller
 {
     protected $service;
 
-    public function __construct(TaskService $service)
-    {
-        $this->service = $service;
-    }
+    // public function __construct(TagService $service)
+    // {
+    //     $this->service = $service;
+    // }
 
-    public function create(CreateTaskRequest $request)
+    public function create(CreateTagRequest $request)
     {
         $request->validated();
 
@@ -30,7 +29,7 @@ class TaskController extends Controller
         //
     }
 
-    public function delete(Task $id)
+    public function delete(Tag $id)
     {
         $this->service->delete($id);
 
