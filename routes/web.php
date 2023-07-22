@@ -31,7 +31,7 @@ Route::middleware("auth")->group(function () {
     
     Route::get('/lists', [TaskListController::class, "index"])->name('list.index');
     Route::post('/lists/new', [TaskListController::class, "create"])->name('list.create');
-    Route::post('/lists/{id}', [TaskListController::class, "update"])->name('list.update');
+    Route::put('/lists/{id}', [TaskListController::class, "update"])->name('list.update');
     Route::delete('/lists/{id}', [TaskListController::class, "delete"])->name('list.delete');
 
     Route::post('/tasks/new', [TaskController::class, "create"])->name('task.create');

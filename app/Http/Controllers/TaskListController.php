@@ -35,9 +35,11 @@ class TaskListController extends Controller
         return $this->service->create($data);
     }
 
-    public function update(Request $request)
+    public function update(CreateTaskListRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        return $this->service->update($data, $id);
     }
 
     public function delete(TaskList $id)

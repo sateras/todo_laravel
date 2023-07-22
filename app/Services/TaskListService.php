@@ -22,9 +22,12 @@ class TaskListService
 
     public function create(array $data)
     {
-        // $request['instructor_id'] = $this->user->id;
-
         return auth()->user()->taskLists()->create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        return auth()->user()->taskLists()->find($id)->update($data);
     }
 
     public function delete($id)

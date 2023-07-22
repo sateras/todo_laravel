@@ -17,6 +17,7 @@
 
 <body style="height: 100%;">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('content')
 </body>
