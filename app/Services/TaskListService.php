@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Task;
 use App\Models\TaskList;
-use App\Models\User;
 
 class TaskListService
 {

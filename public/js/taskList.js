@@ -15,10 +15,11 @@ $(document).ready(function() {
             var taskListHTML = '';
 
             $.each(taskLists, function(index, taskList) {
-                taskListHTML += '<tr>';
-                taskListHTML += '<td>' + taskList.id + '</td>';
+                taskListHTML += '<tr data-tasklistid="' + taskList.id + '">';
+                taskListHTML += '<td id="taskList">' + taskList.id + '</td>';
                 taskListHTML += '<td style="width: 50%" data-tasklistid="' + taskList.id + '"><span id="taskListName">' + taskList.name + '</span><input id="editTaskListInput" type="text" class="input-group-sm" value="' + taskList.name + '" style="display: none; width: 100%"></td>';
                 taskListHTML += '<td><button id="deleteTaskListButton" class="btn btn-danger" data-tasklistid="' + taskList.id + '">Delete</button></td>';
+                taskListHTML += '<td id="taskList"><button class="btn btn-info" style="width: 100%">Open</button></td>';
                 taskListHTML += '</tr>';
             });
 

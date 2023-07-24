@@ -29,18 +29,22 @@ Route::middleware("auth")->group(function () {
     
     Route::get('/', [TaskListController::class, "home"])->name('home');
     
-    Route::get('/lists', [TaskListController::class, "index"])->name('list.index');
-    Route::post('/lists/new', [TaskListController::class, "create"])->name('list.create');
-    Route::put('/lists/{id}', [TaskListController::class, "update"])->name('list.update');
-    Route::delete('/lists/{id}', [TaskListController::class, "delete"])->name('list.delete');
+    Route::get('/lists', [TaskListController::class, "index"]);
+    Route::post('/lists/new', [TaskListController::class, "create"]);
+    Route::put('/lists/{id}', [TaskListController::class, "update"]);
+    Route::delete('/lists/{id}', [TaskListController::class, "delete"]);
 
-    Route::post('/tasks/new', [TaskController::class, "create"])->name('task.create');
-    Route::post('/tasks/{id}', [TaskController::class, "update"])->name('task.update');
-    Route::delete('/tasks/{id}', [TaskController::class, "delete"])->name('task.delete');
+    Route::get('/tasks', [TaskController::class, "index"]);
+    Route::get('/tasks/{id}', [TaskController::class, "show"]);
+    Route::post('/tasks/new', [TaskController::class, "create"]);
+    Route::put('/tasks/{id}', [TaskController::class, "update"]);
+    Route::delete('/tasks/{id}', [TaskController::class, "delete"]);
+    Route::post('/tasks/{id}/tags', [TaskController::class, "addTagToTask"]);
 
-    Route::post('/tags/new', [TagController::class, "create"])->name('tag.create');
-    Route::post('/tags/{id}', [TagController::class, "update"])->name('tag.update');
-    Route::delete('/tags/{id}', [TagController::class, "delete"])->name('tag.delete');
+    Route::get('/tags', [TagController::class, "index"]);
+    // Route::post('/tags/new', [TagController::class, "create"]);
+    // Route::put('/tags/{id}', [TagController::class, "update"]);
+    // Route::delete('/tags/{id}', [TagController::class, "delete"]);
 
     Route::get('/logout', [AuthController::class, "logout"])->name('logout');
 });

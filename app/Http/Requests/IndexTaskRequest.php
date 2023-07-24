@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTaskRequest extends FormRequest
+class IndexTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth('web')->check();
+        return true;
     }
 
     /**
@@ -22,9 +22,8 @@ class CreateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ["required"],
-            "task_list_id" => ["required"],
-            "tags" => ["nullable"],
+            'filter' => 'nullable',
+            'tag_ids' => 'nullable',
         ];
     }
 }

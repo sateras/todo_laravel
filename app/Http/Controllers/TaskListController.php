@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTaskListRequest;
 use App\Models\TaskList;
 use App\Services\TaskListService;
-use Illuminate\Http\Request;
 
 class TaskListController extends Controller
 {
