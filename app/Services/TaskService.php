@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Image;
 use App\Models\Tag;
 use App\Models\Task;
 use App\Models\TaskList;
+use Storage;
 
 class TaskService implements TaskServiceInterface
 {
@@ -106,8 +108,31 @@ class TaskService implements TaskServiceInterface
         return response()->json(['message' => 'Тег успешно добавлен к задаче']);
     }
 
+    public function addImageToTask($data, $id)
+    {
+        $task = Task::findOrFail($id);
 
+        if ($data['image']) {
+            $file = $data['image'];
 
+            if ($file->isValid() && $file->getClientMimeType() === 'image/jpeg' || $file->getClientMimeType() === 'image/png') {
+                
+                $imagePath = $file->store('public/images');
 
+                $image = new Image([
+                    'path' => asset(Storage::url($imagePath)),
+                    'task_id' => $id,
+                    'thumbnail_path' => asset(Storage::url($imagePath))
+                ]);
 
+                $task->image()->save($image);
+
+                return response()->json(['message' => 'Изображение успешно добавлено к задаче']);
+            } else {
+                return response()->json(['error' => 'Неверный формат изображения'], 400);
+            }
+        } else {
+            return response()->json(['error' => 'Файл изображения не был загружен,' . $data['image']->getClientOriginalName()], 400);
+        }
+    }
 }

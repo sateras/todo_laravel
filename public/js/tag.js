@@ -34,18 +34,20 @@ $(document)
 .on("click", '.tag_plus_btn', function(e) {
     var taskListName = $(this);
     var taskListInput = taskListName.parent().next();
+    
     taskListInput.css({
         top: e.pageY + 10,
         left: e.pageX
     }).show();
 
-    $("#newTagInput").focus();
+    taskListInput.children('.newTagInputPopupContainer').focus();
 })
 .on("click", '.newTagPopupContainerButton', function(e) {
-    var newTagInputPopupContainer = $('.newTagInputPopupContainer');
+    var newTagInputPopupContainer = $(this).prev();
     var tagName = newTagInputPopupContainer.val();
     var taskId = $(this).parent().parent().next().next().children().data('taskid');
     newTagInputPopupContainer.val('');
+    console.log(tagName);
     addTagToTask(taskId, tagName);
 })
 .on("blur", '.newTagInputPopupContainer', function(e) {

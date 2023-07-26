@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddImageToTaskRequest;
 use App\Http\Requests\AddTagToTaskRequest;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\IndexTaskRequest;
@@ -54,5 +55,12 @@ class TaskController extends Controller
         $data = $request->validated();
 
         return $this->service->addTagToTask($data, $id);
+    }
+
+    public function addImageToTask(AddImageToTaskRequest $request, $id)
+    {
+        $data = $request->validated();
+
+        return $this->service->addImageToTask($data, $id);
     }
 }

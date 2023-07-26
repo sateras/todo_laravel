@@ -40,6 +40,7 @@ Route::middleware("auth")->group(function () {
     Route::put('/tasks/{id}', [TaskController::class, "update"]);
     Route::delete('/tasks/{id}', [TaskController::class, "delete"]);
     Route::post('/tasks/{id}/tags', [TaskController::class, "addTagToTask"]);
+    Route::post('/tasks/{id}/images', [TaskController::class, "addImageToTask"]);
 
     Route::get('/tags', [TagController::class, "index"]);
     // Route::post('/tags/new', [TagController::class, "create"]);

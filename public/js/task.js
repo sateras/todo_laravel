@@ -32,9 +32,14 @@ $(document).ready(function() {
                 $.each(tasks, function(index, task) {
                     tasksHTML += '<tr>';
                     if (task.image == null) {
-                        tasksHTML += '<td><input type="file" id="taskInputImage" style="display: none"><label for="taskInputImage"><img src="img/no-image-icon-23486.gif" alt="no_img_icon"></label></td>';
+                        tasksHTML += '<td>';
+                        tasksHTML += '<div class="noImageImgDiv">';
+                        tasksHTML += '<img src="img/no-image-icon-23486.gif" alt="no_img_icon">';
+                        tasksHTML += '<div class="noImageImgOverlayDiv"><label for="noImageImgDivInput' + task.id + '">Choose image</label><input id="noImageImgDivInput' + task.id + '" type="file" class="noImageImgDivInput"><button class="noImageImgDivButton">Upload</button></div>';
+                        tasksHTML += '</div>';
+                        tasksHTML += '</td>';
                     } else {
-                        tasksHTML += '<td>' + task.image.thumbnail_path + '</td>';
+                        tasksHTML += '<td><img class="taskImg" src="' + task.image.thumbnail_path + '" alt="task_img"></td>';
                     }
                     tasksHTML += '<td>'
                     $.each(task.tags, function(index, tag) {
@@ -55,7 +60,7 @@ $(document).ready(function() {
                 });
 
                 tasksHTML += '<tr id="hasTaskListId" data-tasklistid="' + taskListId + '">';
-                tasksHTML += '<td><input type="file" class="custom-file-input" id="newTaskInputImage" style="display: none"><label class="custom-file-label" for="newTaskInputImage">Choose file</label></td>';
+                tasksHTML += '<td></td>';
                 tasksHTML += '<td></td>';
                 tasksHTML += '<td><input id="newTaskInput" type="text" class="input-group-sm" style="width: 100%"></td>';
                 tasksHTML += '<td><button id="newTaskButton" class="btn btn-success">New</button></td>';
@@ -99,7 +104,7 @@ $(document).ready(function() {
                     if (task.image == null) {
                         tasksHTML += '<td><img src="img/no-image-icon-23486.gif" alt="no_img_icon"></td>';
                     } else {
-                        tasksHTML += '<td>' + task.image.thumbnail_path + '</td>';
+                        tasksHTML += '<td><img class="taskImg" src="' + task.image.thumbnail_path + '" alt="no_img_icon"></td>';
                     }
                     tasksHTML += '<td>'
                     $.each(task.tags, function(index, tag) {
@@ -182,6 +187,42 @@ $(document).ready(function() {
 
     $(document).ready(function() {
         $("#searchInput" ).autocomplete();
+    });
+
+    $(document).on('mouseover', '.noImageImgDiv', function() {
+        var coordinates = $(this).offset();
+        var noImageImgOverlayDiv = $(this).children('.noImageImgOverlayDiv');
+
+        noImageImgOverlayDiv.css({
+            top: coordinates.top,
+            left: coordinates.left
+        }).show();
+    });
+
+    $(document).on('mouseleave', '.noImageImgDiv', function() {
+        $(".noImageImgOverlayDiv").hide();
+    });
+
+    $(document).on('click', '.noImageImgDivButton', function() {
+        var image = $(this).prev();
+        var formData = new FormData();
+        var taskId = $(this).parent().parent().parent().next().next().next().children('#deleteTaskButton').data("taskid");
+        var taskListId = $('#hasTaskListId').data('tasklistid');
+        formData.append('image', image.prop('files')[0]);
+
+        $.ajax({
+            url: '/tasks/' + taskId + '/images',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                getTasks(taskListId);
+            },
+            error: function(error) {
+                console.log('Произошла ошибка при загрузке фото.');
+            }
+        });
     });
 
     $('#searchButton').click(function() {
